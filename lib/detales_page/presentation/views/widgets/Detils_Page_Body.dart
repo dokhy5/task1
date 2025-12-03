@@ -198,7 +198,7 @@ class _ProductImageCardWithImagesState
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) =>
-                      Image.network('https://via.placeholder.com/150'),
+                      Image.network('https://www.freepik.com/premium-photo/ready-weekend-high-angle-shot-casual-outfit-wooden-outfit_27665706.htm'),
                 ),
               );
             },

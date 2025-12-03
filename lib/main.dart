@@ -19,10 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProductCubit>(
-          create:
-              (_) =>
-                  ProductCubit(getIt.get<ProductRepoImpl>())
-                    ..fetchAllProducts(),
+          create: (_) => ProductCubit(getIt.get<ProductRepoImpl>())..fetchAllProducts(),
         ),
       ],
       child: MaterialApp(
