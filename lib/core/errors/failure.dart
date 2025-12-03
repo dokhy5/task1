@@ -8,7 +8,6 @@ abstract class Failure {
 class ServerFailure extends Failure {
   ServerFailure(super.errMessage);
 
-  /// تحويل DioException لرسالة واضحة
   factory ServerFailure.fromDioError(DioException dioError) {
     switch (dioError.type) {
       case DioExceptionType.connectionTimeout:
@@ -43,7 +42,6 @@ class ServerFailure extends Failure {
     }
   }
 
-  /// التعامل مع response من الـ API بناءً على status code
   factory ServerFailure.fromResponse(int statusCode, dynamic response) {
     if (statusCode == 400 || statusCode == 401) {
       return ServerFailure(

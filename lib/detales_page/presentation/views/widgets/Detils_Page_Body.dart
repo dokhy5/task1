@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:task1/detales_page/data/models/poductmodel/poductmodel.dart';
 import 'package:task1/detales_page/presentation/manger/detils_item/ProductCubit.dart';
 import 'package:task1/detales_page/presentation/manger/detils_item/ProductState.dart';
@@ -44,7 +45,6 @@ class _DetilsPageBodyState extends State<DetilsPageBody> {
             } else if (state is ProductDetailsSuccess) {
               final Poductmodel product = state.product;
 
-              // fallback للقيم الفارغة
               final images =
                   (product.image != null && product.image!.isNotEmpty)
                       ? [product.image!]
@@ -55,9 +55,7 @@ class _DetilsPageBodyState extends State<DetilsPageBody> {
               double newPrice =
                   double.tryParse(product.discountPrice ?? '0') ?? 0;
               double discount =
-                  oldPrice != 0
-                      ? ((oldPrice - newPrice).abs() / oldPrice * 100)
-                      : 0;
+                  oldPrice != 0 ? ((oldPrice - newPrice).abs() / oldPrice * 100) : 0;
 
               return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -126,9 +124,7 @@ class _DetilsPageBodyState extends State<DetilsPageBody> {
                           ),
                       itemBuilder: (context, index) {
                         final image =
-                            images.isNotEmpty
-                                ? images[0]
-                                : 'https://via.placeholder.com/150';
+                            images.isNotEmpty ? images[0] : 'https://via.placeholder.com/150';
                         final name = product.name ?? 'Product Name';
 
                         return SimilarProductCard(
@@ -155,7 +151,6 @@ class _DetilsPageBodyState extends State<DetilsPageBody> {
   }
 }
 
-/// نسخة محسنة من ProductImageCard لقبول قائمة الصور
 class ProductImageCardWithImages extends StatefulWidget {
   final List<String> images;
   const ProductImageCardWithImages({super.key, required this.images});
@@ -195,14 +190,15 @@ class _ProductImageCardWithImagesState
                       : 'https://via.placeholder.com/150';
               return Container(
                 padding: const EdgeInsets.all(4),
-                child: Image.network(
-                  imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
                   width: 260,
                   height: 300,
                   fit: BoxFit.contain,
-                  errorBuilder:
-                      (context, error, stackTrace) =>
-                          Image.network('https://via.placeholder.com/150'),
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) =>
+                      Image.network('https://via.placeholder.com/150'),
                 ),
               );
             },

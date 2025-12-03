@@ -9,40 +9,10 @@ class ApiService {
     dio.options.receiveTimeout = const Duration(seconds: 5);
   }
 
-  /// جلب كل المنتجات
-  Future<List<dynamic>> getProducts() async {
+  /// جلب منتج محدد برقم 6 فقط
+  Future<Map<String, dynamic>> getProduct6() async {
     try {
-      final response = await dio.get("");
-      if (response.statusCode == 200) {
-        if (response.data is List) {
-          return response.data;
-        } else if (response.data['data'] is List) {
-          return response.data['data'];
-        } else {
-          throw DioException(
-            requestOptions: response.requestOptions,
-            response: response,
-            error: "صيغة البيانات غير متوقعة",
-            type: DioExceptionType.badResponse,
-          );
-        }
-      } else {
-        throw DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          error: 'خطأ في جلب المنتجات: ${response.statusCode}',
-          type: DioExceptionType.badResponse,
-        );
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  /// جلب منتج محدد بالـ ID
-  Future<Map<String, dynamic>> getProductById(int id) async {
-    try {
-      final response = await dio.get("$id/");
+      final response = await dio.get("6");
       if (response.statusCode == 200) {
         final data = response.data;
         if (data is Map<String, dynamic>) {

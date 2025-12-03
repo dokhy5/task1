@@ -13,7 +13,7 @@ class ProductRepoImpl implements ProductRepo {
   @override
   Future<Either<Failure, List<Poductmodel>>> fetchAllProducts() async {
     try {
-      final data = await apiService.getProducts(); // جلب كل المنتجات
+      final data = await apiService.getProduct6(); // جلب كل المنتجات
       final products =
           (data as List).map((e) => Poductmodel.fromJson(e)).toList();
       return right(products);
@@ -30,7 +30,7 @@ class ProductRepoImpl implements ProductRepo {
     required String category,
   }) async {
     try {
-      final data = await apiService.getProducts();
+      final data = await apiService.getProduct6();
       final filtered =
           (data as List)
               .where((item) => item['category']['slug'] == category)
@@ -50,7 +50,7 @@ class ProductRepoImpl implements ProductRepo {
     required int id,
   }) async {
     try {
-      final data = await apiService.getProductById(id);
+     final data = await apiService.getProduct6();
       final product = Poductmodel.fromJson(data);
       return right(product);
     } catch (e) {
